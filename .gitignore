@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Distribution / packaging
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+env/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# macOS/Linux
+.DS_Store
+Thumbs.db
+
+# Editors and IDEs
+.vscode/
+.idea/
+
+# Test / coverage / type-checker caches
+.pytest_cache/
+.mypy_cache/
+.pyre/
+
+# Logs
+logs/
+*.log
+
