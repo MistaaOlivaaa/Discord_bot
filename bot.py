@@ -8,9 +8,9 @@ from typing import Optional, Dict
 import os
 from dotenv import load_dotenv
 
-# Load environment variables from a .env file if present
+
 load_dotenv()
-# Read bot token from environment variable DISCORD_TOKEN
+
 TOKEN = os.getenv("DISCORD_TOKEN")
 
 YDL_OPTIONS = {
@@ -28,7 +28,7 @@ FFMPEG_OPTIONS = {
 }
 
 intents = discord.Intents.default()
-# Slash commands don't need the Message Content intent; leave it disabled to avoid privileged intent requirement.
+
 intents.message_content = False
 intents.voice_states = True
 bot = commands.Bot(command_prefix='!', intents=intents)
@@ -321,22 +321,22 @@ async def kick(
     member: discord.Member,
     reason: str | None = None,
 ):
-    # Quick sanity checks
+   
     if member.id == interaction.user.id:
         await interaction.response.send_message("❌ You can't kick yourself.", ephemeral=True)
         return
-    # Prevent targeting the bot itself
+    
     if member.id == interaction.client.user.id:
         await interaction.response.send_message("❌ I won't kick myself.", ephemeral=True)
         return
     if member.id == interaction.guild.owner_id:
         await interaction.response.send_message("❌ You can't kick the server owner.", ephemeral=True)
         return
-    # Check bot permissions
+   
     if not interaction.guild.me.guild_permissions.kick_members:
         await interaction.response.send_message("❌ I don't have permission to kick members.", ephemeral=True)
         return
-    # Role hierarchy checks (user and bot)
+    
     if not _role_higher(interaction.user, member) and interaction.user.id != interaction.guild.owner_id:
         await interaction.response.send_message("❌ You can't kick someone with an equal or higher role.", ephemeral=True)
         return
@@ -371,7 +371,7 @@ async def ban(
     if member.id == interaction.user.id:
         await interaction.response.send_message("❌ You can't ban yourself.", ephemeral=True)
         return
-    # Prevent targeting the bot itself
+    
     if member.id == interaction.client.user.id:
         await interaction.response.send_message("❌ I won't ban myself.", ephemeral=True)
         return
@@ -406,7 +406,7 @@ async def ban(
 
 @bot.tree.error
 async def on_app_command_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
-    # Handle common permission errors more gracefully
+    
     if isinstance(error, app_commands.MissingPermissions):
         await interaction.response.send_message(
             "❌ You don't have the required permissions to use this command.", ephemeral=True
@@ -430,7 +430,7 @@ async def on_app_command_error(interaction: discord.Interaction, error: app_comm
 
 
 if __name__ == "__main__":
-    # Sanitize and validate token
+    
     if TOKEN:
         TOKEN = TOKEN.strip().strip('"').strip("'")
         if TOKEN.lower().startswith("bot "):
